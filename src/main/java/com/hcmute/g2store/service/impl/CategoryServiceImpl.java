@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,13 +23,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void updateCategory(Integer id, String name) {
-        Category category = categoryRepo.findById(id).get();
-        if (category == null)  throw new CategoryException("");
-
+    public Category updateCategory(Integer id, String name) {
+        Optional<Category> category = categoryRepo.findById(id);
+        if (category.isPresent()){
+            category.get().setName(name);
+            category.get();
+        }
+        throw new CategoryException("Category with id" + id + " not found");
     }
 
     @Override
+    @Transactional
     public Category deleteCategory(Integer id) {
         Optional<Category> category = categoryRepo.findById(id);
         if (category.isPresent()) {
@@ -36,5 +41,12 @@ public class CategoryServiceImpl implements CategoryService {
             return category.get();
         }
         throw new CategoryException("Category with id" + id + " not found");
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        List<Category> categories = categoryRepo.findAll();
+        if (categories.isEmpty()) throw new CategoryException("No category found");
+        return categories;
     }
 }
