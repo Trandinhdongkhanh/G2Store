@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> category = categoryRepo.findById(id);
         if (category.isPresent()){
             category.get().setName(name);
-            category.get();
+            return category.get();
         }
         throw new CategoryException("Category with id" + id + " not found");
     }

@@ -1,5 +1,6 @@
 package com.hcmute.g2store.service.impl;
 
+import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.exception.CategoryException;
 import com.hcmute.g2store.repository.SubCategoryRepo;
@@ -22,13 +23,14 @@ public class SubCategoryImpl implements SubCategoryService {
 
     @Override
     @Transactional
-    public SubCategory updateSubCategory(Integer id, String name) {
+    public SubCategory updateSubCategory(Integer id, SubCategory subCategory1) {
         Optional<SubCategory> subCategory = subCategoryRepo.findById(id);
         if (subCategory.isPresent()){
-            subCategory.get().setName(name);
+            subCategory.get().setName(subCategory1.getName());
+            subCategory.get().setCategory(subCategory1.getCategory());
             return subCategory.get();
         }
-        throw new CategoryException("SubCategory " + name + " not found");
+        throw new CategoryException("SubCategory " + subCategory1.getName() + " not found");
     }
 
     @Override
