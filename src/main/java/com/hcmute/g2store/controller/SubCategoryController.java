@@ -18,8 +18,8 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryService.getAllSubCategories());
     }
 
-    @GetMapping("/api/v1/sub-categories/{cateId}")
-    public ResponseEntity<List<SubCategory>> getSubCategoriesByCateId(@PathVariable("cateId") Integer id) {
+    @GetMapping("/api/v1/sub-categories/{id}")
+    public ResponseEntity<List<SubCategory>> getSubCategoriesByCateId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(subCategoryService.getSubCategoriesByCategoryId(id));
     }
 
@@ -28,11 +28,12 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryService.addSubCategory(subCategory));
     }
 
-    @PutMapping("/api/v1/update-sub-category/{id}")
+    @PutMapping("/api/v1/update-sub-category/{subCateId}")
     public ResponseEntity<SubCategory> updateSubCategory(
-            @PathVariable("id") Integer id,
-            @RequestParam("name") String name) {
-        return ResponseEntity.ok(subCategoryService.updateSubCategory(id, name));
+            @PathVariable("subCateId") Integer subCateId,
+            @RequestParam("name") String name,
+            @RequestParam(value = "cateId", required = false) Integer cateId) {
+        return ResponseEntity.ok(subCategoryService.updateSubCategory(subCateId, name, cateId));
     }
     @PutMapping("/api/v1/del-sub-category/{id}")
     public ResponseEntity<SubCategory> delSubCategory(@PathVariable("id") Integer id){

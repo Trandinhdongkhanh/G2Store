@@ -27,9 +27,9 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> category = categoryRepo.findById(id);
         if (category.isPresent()){
             category.get().setName(name);
-            category.get();
+            return category.get();
         }
-        throw new CategoryException("Category with id" + id + " not found");
+        throw new CategoryException("Category with id " + id + " not found");
     }
 
     @Override
@@ -49,4 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
         if (categories.isEmpty()) throw new CategoryException("No category found");
         return categories;
     }
+
+    @Override
+    public Category getCategoryById(Integer id) {
+        Optional<Category> category = categoryRepo.findById(id);
+        if (category.isPresent()){
+            return category.get();
+        }
+        throw new CategoryException("Category " + id + " not found");
+    }
+
 }

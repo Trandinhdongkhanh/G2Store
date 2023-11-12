@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SubCategoryService {
     SubCategory addSubCategory(SubCategory subCategory);
-    SubCategory updateSubCategory(Integer id, String name);
+    SubCategory updateSubCategory(Integer subCateId, String name, Integer cateId);
     SubCategory delSubCategory(Integer id);
     List<SubCategory> getAllSubCategories();
     List<SubCategory> getSubCategoriesByCategoryId(Integer id);

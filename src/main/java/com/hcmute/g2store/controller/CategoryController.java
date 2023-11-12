@@ -23,10 +23,10 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.addCategory(category));
     }
 
-    @PutMapping("/api/v1/update-category")
+    @PutMapping("/api/v1/update-category/{id}")
     public ResponseEntity<?> updateCategory(
-            @RequestParam Integer id,
-            @RequestParam String name
+            @PathVariable("id") Integer id,
+            @RequestParam("name") String name
     ) {
         return ResponseEntity.ok(categoryService.updateCategory(id, name));
     }
@@ -34,5 +34,9 @@ public class CategoryController {
     @PutMapping("/api/v1/delete-category/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(categoryService.deleteCategory(id));
+    }
+    @GetMapping("/api/v1/category/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 }
