@@ -1,6 +1,9 @@
 package com.hcmute.g2store.service;
 
+import com.hcmute.g2store.entity.Customer;
+import com.hcmute.g2store.entity.Role;
 import com.hcmute.g2store.repository.CustomerRepo;
+import com.hcmute.g2store.repository.RoleRepo;
 import com.hcmute.g2store.service.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -14,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class CustomerServiceTest {
     @Mock
     private CustomerRepo customerRepo;
+    @Mock
+    private RoleRepo roleRepo;
     private CustomerService customerService;
     @BeforeEach
     void setUp(){
@@ -23,6 +28,12 @@ public class CustomerServiceTest {
     @Disabled
     void canSignUp(){
 
+    }
+    @Test
+    void canSignIn(){
+        //given
+        roleRepo.save(new Role("ROLE_CUSTOMER"));
+        roleRepo.save(new Role("ROLE_ADMIN"));
     }
 
     @Test

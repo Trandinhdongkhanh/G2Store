@@ -21,8 +21,8 @@ public class LoginController {
 
     @GetMapping("/api/v1/signin")
     public ResponseEntity<CustomerDTO> signin(
-            @PathVariable("username") String username,
-            @PathVariable("password") String password) {
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
         return ResponseEntity.ok(customerService.signin(username, password));
     }
 

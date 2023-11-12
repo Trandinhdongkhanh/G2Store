@@ -48,6 +48,6 @@ public class Customer {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     Set<CartItem> items;
 }

@@ -22,11 +22,17 @@ public class CategoryController {
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         return ResponseEntity.ok(categoryService.addCategory(category));
     }
+
     @PutMapping("/api/v1/update-category")
-    public ResponseEntity<Object> updateCategory(
-            @RequestParam(required = true) Integer id,
-            @RequestParam(required = true) String name
-    ){
+    public ResponseEntity<?> updateCategory(
+            @RequestParam Integer id,
+            @RequestParam String name
+    ) {
         return ResponseEntity.ok(categoryService.updateCategory(id, name));
+    }
+
+    @PutMapping("/api/v1/delete-category/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(categoryService.deleteCategory(id));
     }
 }

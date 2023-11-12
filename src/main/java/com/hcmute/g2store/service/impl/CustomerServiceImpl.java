@@ -6,15 +6,14 @@ import com.hcmute.g2store.entity.Role;
 import com.hcmute.g2store.exception.LoginException;
 import com.hcmute.g2store.repository.CustomerRepo;
 import com.hcmute.g2store.repository.RoleRepo;
+import com.hcmute.g2store.security.CustomerDetail;
+import com.hcmute.g2store.security.CustomerDetailService;
 import com.hcmute.g2store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +24,8 @@ public class CustomerServiceImpl implements CustomerService {
     private RoleRepo roleRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CustomerDetailService customerDetailService;
     @Autowired
     public CustomerServiceImpl(CustomerRepo customerRepo){
         this.customerRepo = customerRepo;
@@ -51,9 +52,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO signin(String username, String password) {
-        Optional<Customer> customer = customerRepo.findByUsernameAndPassword(username, password);
-        if (customer.isPresent()) {
-            return Mapper.toCustomerDto(customer.get());
+        CustomerDetail customerDetail = (CustomerDetail) customerDetailService.loadUserByUsername(username);
+        String encodedPassword = customerDetail.getPassword();
+        if (customerDetail != null && passwordEncoder.matches(password, encodedPassword)){
+            return Mapper.toCustomerDto(customerDetail.getCustomer());
         }
         throw new LoginException("Wrong credentials");
     }
