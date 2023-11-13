@@ -17,7 +17,10 @@ public class SubCategoryController {
     public ResponseEntity<List<SubCategory>> getAllSubCategories() {
         return ResponseEntity.ok(subCategoryService.getAllSubCategories());
     }
-
+    @GetMapping("/api/v1/sub-category/{id}")
+    public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(subCategoryService.getSubCategoryById(id));
+    }
     @GetMapping("/api/v1/sub-categories/{id}")
     public ResponseEntity<List<SubCategory>> getSubCategoriesByCateId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(subCategoryService.getSubCategoriesByCategoryId(id));
