@@ -15,7 +15,9 @@ public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
     private String phoneNo;
     private String address;
+    private boolean isEnabled;
 }

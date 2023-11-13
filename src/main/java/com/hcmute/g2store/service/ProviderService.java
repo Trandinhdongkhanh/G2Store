@@ -7,6 +7,7 @@ import java.util.List;
 public interface ProviderService {
     Provider addProvider(Provider provider);
     Provider delProvider(Integer id);
-    Provider updateProvider();
-    List<Provider> getAllProviders()
+    Provider updateProvider(Integer id, String name, String phoneNo, String address);
+    List<Provider> getAllProviders();
+    Provider getProviderById(Integer id);
 }
