@@ -31,12 +31,9 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryService.addSubCategory(subCategory));
     }
 
-    @PutMapping("/api/v1/update-sub-category/{subCateId}")
-    public ResponseEntity<SubCategory> updateSubCategory(
-            @PathVariable("subCateId") Integer subCateId,
-            @RequestParam("name") String name,
-            @RequestParam(value = "cateId", required = false) Integer cateId) {
-        return ResponseEntity.ok(subCategoryService.updateSubCategory(subCateId, name, cateId));
+    @PutMapping("/api/v1/update-sub-category")
+    public ResponseEntity<SubCategory> updateSubCategory(@RequestBody SubCategory subCategory) {
+        return ResponseEntity.ok(subCategoryService.updateSubCategory(subCategory));
     }
     @PutMapping("/api/v1/del-sub-category/{id}")
     public ResponseEntity<SubCategory> delSubCategory(@PathVariable("id") Integer id){

@@ -22,14 +22,9 @@ public class ProviderController {
         return ResponseEntity.ok(providerService.addProvider(provider));
     }
 
-    @PutMapping("/api/v1/update-provider/{id}")
-    public ResponseEntity<?> updateProvider(
-            @PathVariable("id") Integer id,
-            @RequestParam("name") String name,
-            @RequestParam("phoneNo") String phoneNo,
-            @RequestParam("address") String address
-    ) {
-        return ResponseEntity.ok(providerService.updateProvider(id, name, phoneNo, address));
+    @PutMapping("/api/v1/update-provider")
+    public ResponseEntity<?> updateProvider(@RequestBody Provider provider) {
+        return ResponseEntity.ok(providerService.updateProvider(provider));
     }
 
     @PutMapping("/api/v1/delete-provider/{id}")

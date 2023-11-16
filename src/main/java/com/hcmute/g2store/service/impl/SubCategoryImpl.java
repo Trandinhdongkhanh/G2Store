@@ -1,10 +1,8 @@
 package com.hcmute.g2store.service.impl;
 
 import com.hcmute.g2store.entity.Category;
-import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.exception.CategoryException;
-import com.hcmute.g2store.exception.ProductException;
 import com.hcmute.g2store.repository.CategoryRepo;
 import com.hcmute.g2store.repository.SubCategoryRepo;
 import com.hcmute.g2store.service.SubCategoryService;
@@ -33,12 +31,12 @@ public class SubCategoryImpl implements SubCategoryService {
 
     @Override
     @Transactional
-    public SubCategory updateSubCategory(Integer subCateId, String name, Integer cateId) {
-        Optional<SubCategory> subCategory = subCategoryRepo.findById(subCateId);
-        Optional<Category> category = categoryRepo.findById(cateId);
-        if (subCategory.isEmpty()) throw new CategoryException("SubCategory " + subCateId +" not found");
-        if (category.isEmpty()) throw new CategoryException("Category " + cateId + " not found");
-        subCategory.get().setName(name);
+    public SubCategory updateSubCategory(SubCategory updateSubCategory) {
+        Optional<SubCategory> subCategory = subCategoryRepo.findById(updateSubCategory.getId());
+        Optional<Category> category = categoryRepo.findById(updateSubCategory.getCategory().getId());
+        if (subCategory.isEmpty()) throw new CategoryException("SubCategory " + updateSubCategory.getId() +" not found");
+        if (category.isEmpty()) throw new CategoryException("Category " + updateSubCategory.getCategory().getId() + " not found");
+        subCategory.get().setName(updateSubCategory.getName());
         subCategory.get().setCategory(category.get());
         return subCategory.get();
     }

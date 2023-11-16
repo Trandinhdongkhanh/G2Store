@@ -23,13 +23,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category updateCategory(Integer id, String name) {
-        Optional<Category> category = categoryRepo.findById(id);
+    public Category updateCategory(Category updateCategory) {
+        Optional<Category> category = categoryRepo.findById(updateCategory.getId());
         if (category.isPresent()){
-            category.get().setName(name);
+            category.get().setName(updateCategory.getName());
             return category.get();
         }
-        throw new CategoryException("Category with id " + id + " not found");
+        throw new CategoryException("Category with id " + updateCategory.getId() + " not found");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.hcmute.g2store.service;
 
-import com.hcmute.g2store.entity.Customer;
 import com.hcmute.g2store.entity.Role;
 import com.hcmute.g2store.repository.CustomerRepo;
 import com.hcmute.g2store.repository.RoleRepo;

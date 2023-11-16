@@ -33,13 +33,15 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     @Transactional
-    public Provider updateProvider(Integer id, String name, String phoneNo, String address) {
-        Optional<Provider> provider = providerRepo.findById(id);
+    public Provider updateProvider(Provider updateProvider) {
+        Optional<Provider> provider = providerRepo.findById(updateProvider.getId());
         if (provider.isPresent()){
-            provider.get().setName(name);
+            provider.get().setName(updateProvider.getName());
+            provider.get().setPhoneNo(updateProvider.getPhoneNo());
+            provider.get().setAddress(updateProvider.getAddress());
             return provider.get();
         }
-        throw new ProviderException("Provider with id " + id + " not found");
+        throw new ProviderException("Provider: " + updateProvider.getName() + " not found");
     }
 
     @Override

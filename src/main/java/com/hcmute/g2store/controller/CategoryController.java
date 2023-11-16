@@ -23,12 +23,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.addCategory(category));
     }
 
-    @PutMapping("/api/v1/update-category/{id}")
-    public ResponseEntity<?> updateCategory(
-            @PathVariable("id") Integer id,
-            @RequestParam("name") String name
-    ) {
-        return ResponseEntity.ok(categoryService.updateCategory(id, name));
+    @PutMapping("/api/v1/update-category")
+    public ResponseEntity<?> updateCategory(@RequestBody Category category) {
+        return ResponseEntity.ok(categoryService.updateCategory(category));
     }
 
     @PutMapping("/api/v1/delete-category/{id}")
