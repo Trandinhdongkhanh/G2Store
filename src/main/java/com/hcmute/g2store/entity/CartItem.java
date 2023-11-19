@@ -5,8 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,14 +24,6 @@ public class CartItem {
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
-
     private Integer quantity;
 
-    @Transient
-    private Integer total;
-
-    public Integer getTotal(){
-        this.total = product.getPrice() * this.quantity;
-        return total;
-    }
 }

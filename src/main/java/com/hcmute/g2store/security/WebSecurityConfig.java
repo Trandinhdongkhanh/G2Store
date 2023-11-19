@@ -68,8 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/add-sub-category").permitAll()
                 .anyRequest().permitAll()
                 .and()
-                .cors()
-                .and()
+                .cors().disable()
                 .httpBasic();
     }
 

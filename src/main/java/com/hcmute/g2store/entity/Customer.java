@@ -1,5 +1,7 @@
 package com.hcmute.g2store.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,7 +49,11 @@ public class Customer {
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    Set<CartItem> items;
+    @JsonIgnore
+    private Set<CartItem> items;
+
+
+
+
 }

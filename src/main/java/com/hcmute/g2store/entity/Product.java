@@ -1,5 +1,6 @@
 package com.hcmute.g2store.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,8 @@ public class Product {
     private String name;
     @Column(nullable = false)
     private Integer price;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     @Column(columnDefinition = "MEDIUMBLOB")
     @Lob
@@ -33,6 +36,7 @@ public class Product {
     @JoinColumn(name = "provider_id")
     private Provider provider;
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private Set<CartItem> cartItems;
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems;
