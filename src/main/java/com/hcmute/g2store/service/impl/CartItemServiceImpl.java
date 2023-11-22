@@ -35,19 +35,14 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     @Transactional
-    public CartItem updateCartItem(CartItem updateCartItem) {
-        CartItemKey cartItemKey = updateCartItem.getId();
-        Optional<CartItem> cartItemOptional = cartItemRepository.findById(cartItemKey);
-        if (cartItemOptional.isPresent()) {
-            CartItem existingCartItem = cartItemOptional.get();
-            Customer customer = customerRepo.findById(updateCartItem.getCustomer().getId()).orElse(null);
-            Product product = productRepo.findById(updateCartItem.getProduct().getId()).orElse(null);
-            existingCartItem.setCustomer(customer);
-            existingCartItem.setProduct(product);
-            existingCartItem.setQuantity(updateCartItem.getQuantity());
-            return existingCartItem;
+    public CartItem updateQuantity(CartItem updateCartItem) {
+        Optional<CartItem> cartItem = cartItemRepository.findById(updateCartItem.getId());
+        if (cartItem.isPresent()) {
+            updateCartItem.setCustomer(cartItem.get().getCustomer());
+            updateCartItem.setProduct(cartItem.get().getProduct());
+            return updateCartItem;
         }
-        throw new CartItemException("CartItem with id " + cartItemKey + " not found");
+        throw new CartItemException("CartItem with id " + updateCartItem.getId() + " not found");
     }
 
 

@@ -1,10 +1,13 @@
 package com.hcmute.g2store.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hcmute.g2store.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,6 +29,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order")
+    @JsonManagedReference
     private Set<OrderItem> orderItems;
 }

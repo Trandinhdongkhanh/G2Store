@@ -52,7 +52,8 @@ public class Customer {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<CartItem> items;
-
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItems;
 
 
 

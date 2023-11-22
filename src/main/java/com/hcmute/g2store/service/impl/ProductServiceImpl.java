@@ -45,30 +45,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product updatedProduct) {
-        Integer subCateId = updatedProduct.getSubCategory().getId();
-        Integer providerId = updatedProduct.getProvider().getId();
-        Optional<SubCategory> subCategory = subCategoryRepo.findById(subCateId);
-        Optional<Provider> provider = providerRepo.findById(providerId);
-        Optional<Product> product = productRepo.findById(updatedProduct.getId());
+    public Product updateProduct(Product updateProduct) {
+        Optional<SubCategory> subCategory = subCategoryRepo.findById(updateProduct.getSubCategory().getId());
+        Optional<Provider> provider = providerRepo.findById(updateProduct.getProvider().getId());
+        Optional<Product> product = productRepo.findById(updateProduct.getId());
+        if (product.isEmpty()) {
+            throw new ProductException("Product with ID " + updateProduct.getId() + " not found");
+        }
         if (subCategory.isEmpty()) {
-            throw new CategoryException("SubCategory " + subCateId + " not found");
+            throw new CategoryException("SubCategory " + updateProduct.getSubCategory().getId() + " not found");
         }
         if (provider.isEmpty()) {
-            throw new ProviderException("Provider " + providerId + " not found");
+            throw new ProviderException("Provider " + updateProduct.getProvider().getId() + " not found");
         }
-        if (product.isEmpty()) {
-            throw new ProductException("Product with ID " + updatedProduct.getId() + " not found");
-        }
-        Product productToUpdate = product.get();
-        productToUpdate.setSubCategory(subCategory.get());
-        productToUpdate.setProvider(provider.get());
-        productToUpdate.setName(updatedProduct.getName());
-        productToUpdate.setPrice(updatedProduct.getPrice());
-        productToUpdate.setDescription(updatedProduct.getDescription());
-        productToUpdate.setDiscount(updatedProduct.getDiscount());
-        productToUpdate.setImage(updatedProduct.getImage());
-        return productRepo.save(productToUpdate);
+        updateProduct.setSubCategory(subCategory.get());
+        updateProduct.setProvider(provider.get());
+        return productRepo.save(updateProduct);
     }
 
     @Override

@@ -11,6 +11,10 @@ public class OrderItemKey implements Serializable {
     @Column(name = "product_id")
     private Integer productId;
 
+    public OrderItemKey() {
+
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -19,5 +23,10 @@ public class OrderItemKey implements Serializable {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
+    }
+
+    public OrderItemKey(Integer orderId, Integer productId) {
+        this.orderId = orderId;
+        this.productId = productId;
     }
 }

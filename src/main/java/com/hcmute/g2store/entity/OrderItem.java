@@ -1,5 +1,6 @@
 package com.hcmute.g2store.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class OrderItem {
     @ManyToOne
     @MapsId("orderId")
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
     @ManyToOne

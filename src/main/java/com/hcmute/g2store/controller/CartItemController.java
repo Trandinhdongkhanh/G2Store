@@ -22,8 +22,8 @@ public class CartItemController {
     }
 
     @PutMapping("/api/v1/update-cartitems")
-    public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
-        CartItem updatedCartItem = cartItemService.updateCartItem(cartItem);
+    public ResponseEntity<CartItem> updateQuantity(@RequestBody CartItem cartItem) {
+        CartItem updatedCartItem = cartItemService.updateQuantity(cartItem);
         return ResponseEntity.ok(updatedCartItem);
     }
 

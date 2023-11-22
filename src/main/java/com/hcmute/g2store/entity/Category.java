@@ -20,4 +20,7 @@ public class Category {
     @Column(nullable = false)
     private String name;
     private boolean isEnabled;
+    public Category(String name) {
+        this.name = name;
+    }
 }
