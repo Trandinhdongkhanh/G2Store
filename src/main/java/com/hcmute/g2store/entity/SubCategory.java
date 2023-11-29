@@ -21,5 +21,5 @@ public class SubCategory {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 }

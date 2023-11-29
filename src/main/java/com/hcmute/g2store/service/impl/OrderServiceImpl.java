@@ -1,6 +1,9 @@
 package com.hcmute.g2store.service.impl;
 
+import com.hcmute.g2store.dto.CartItemDTO;
+import com.hcmute.g2store.dto.OrderDTO;
 import com.hcmute.g2store.entity.*;
+import com.hcmute.g2store.enums.OrderStatus;
 import com.hcmute.g2store.exception.OrderException;
 import com.hcmute.g2store.repository.CustomerRepo;
 import com.hcmute.g2store.repository.OrderItemRepo;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,25 +48,20 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setOrder(addOrder);
             orderItemRepo.save(orderItem);
         }
+        orderRepo.save(addOrder);
         return addOrder;
     }
 
     @Override
     @Transactional
-    public Order updateOrder(Order updateOrder) {
-        Optional<Order> optionalOrder = orderRepo.findById(updateOrder.getId());
-        if (optionalOrder.isPresent()) {
-            Order existingOrder = optionalOrder.get();
-            // Update existingOrder with properties from updateOrder
-            existingOrder.setCreatedDate(updateOrder.getCreatedDate());
-            existingOrder.setOrderStatus(updateOrder.getOrderStatus());
-            existingOrder.setNote(updateOrder.getNote());
-            existingOrder.setCustomer(updateOrder.getCustomer());
-            existingOrder.setOrderItems(updateOrder.getOrderItems());
-
-            // Perform any other necessary business logic
-
-            return existingOrder;
+    public Order updateOrderStatus(Order updateOrder) {
+        OrderStatus orderStatus = updateOrder.getOrderStatus();
+        Optional<Order> order = orderRepo.findById(updateOrder.getId());
+        if (order.isPresent()) {
+            updateOrder = order.get();
+            updateOrder.setOrderStatus(orderStatus);
+            orderRepo.save(updateOrder);
+            return updateOrder;
         }
         throw new OrderException("Order with id " + updateOrder.getId() + " not found");
     }
@@ -90,17 +89,60 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Integer id) {
+    public OrderDTO getOrderById(Integer id) {
         Optional<Order> optionalOrder = orderRepo.findById(id);
         if (optionalOrder.isPresent()) {
-            return optionalOrder.get();
+            return Mapper.toOrderDto(optionalOrder.get());
         }
         throw new OrderException("Order with id " + id + " not found");
     }
 
     @Override
-    public List<Order> getOrderByCustomerId(Integer customerId) {
-        // Implement logic to get orders by customer ID from the repository
-        return orderRepo.findAllOrdersByCustomer(customerId);
+    public List<OrderDTO> getOrdersByCustomerId(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomer(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
+    }
+    @Override
+    public List<OrderDTO> getOrdersByCustomerIdPending(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomerPending(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
+    }
+    @Override
+    public List<OrderDTO> getOrdersByCustomerIdConfirmed(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomerConfirmed(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
+    }
+    @Override
+    public List<OrderDTO> getOrdersByCustomerIdOnDelivery(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomerOnDelivery(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
+    }
+    @Override
+    public List<OrderDTO> getOrdersByCustomerIdCancel(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomerCancel(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
+    }
+    @Override
+    public List<OrderDTO> getOrdersByCustomerIdSuccess(Integer customerId) {
+        List<Order> orders = orderRepo.findAllOrdersByCustomerSuccess(customerId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(order -> Mapper.toOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDTOS;
     }
 }

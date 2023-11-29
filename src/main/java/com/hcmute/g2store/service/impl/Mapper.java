@@ -2,8 +2,10 @@ package com.hcmute.g2store.service.impl;
 
 import com.hcmute.g2store.dto.CartItemDTO;
 import com.hcmute.g2store.dto.CustomerDTO;
+import com.hcmute.g2store.dto.OrderDTO;
 import com.hcmute.g2store.entity.CartItem;
 import com.hcmute.g2store.entity.Customer;
+import com.hcmute.g2store.entity.Order;
 
 public class Mapper {
     public static CustomerDTO toCustomerDto(Customer customer){
@@ -16,6 +18,7 @@ public class Mapper {
                 .point(customer.getPoint())
                 .address(customer.getAddress())
                 .avatar(customer.getAvatar())
+                .enabled(customer.isEnabled())
                 .build();
     }
     public static CartItemDTO toCartItemDto(CartItem cartItem){
@@ -24,6 +27,19 @@ public class Mapper {
                 .customerId(cartItem.getCustomer().getId())
                 .product(cartItem.getProduct())
                 .quantity(cartItem.getQuantity())
+                .build();
+    }
+    public static OrderDTO toOrderDto(Order order){
+        return OrderDTO.builder()
+                .id(order.getId())
+                .createdDate(order.getCreatedDate())
+                .orderStatus(order.getOrderStatus())
+                .note(order.getNote())
+                .customerId(order.getCustomer().getId())
+                .phoneNo(order.getCustomer().getPhoneNo())
+                .address(order.getCustomer().getAddress())
+                .orderItems(order.getOrderItems())
+                .total(order.getTotal())
                 .build();
     }
     public static Customer toCustomer(CustomerDTO customerDTO){

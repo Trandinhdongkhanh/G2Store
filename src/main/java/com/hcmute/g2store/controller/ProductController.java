@@ -1,6 +1,7 @@
 package com.hcmute.g2store.controller;
 
 import com.hcmute.g2store.entity.Product;
+import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,10 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
-
+    @GetMapping("/api/v1/products-enabled")
+    public ResponseEntity<List<Product>> getAllEnabledProducts() {
+        return ResponseEntity.ok(productService.getAllEnabledProducts());
+    }
     @GetMapping("/api/v1/product/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(productService.getProductById(id));

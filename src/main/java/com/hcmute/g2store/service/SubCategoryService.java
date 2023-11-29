@@ -10,5 +10,6 @@ public interface SubCategoryService {
     SubCategory delSubCategory(Integer id);
     SubCategory getSubCategoryById(Integer id);
     List<SubCategory> getAllSubCategories();
+    List<SubCategory> getAllEnabledSubCategories();
     List<SubCategory> getSubCategoriesByCategoryId(Integer id);
 }

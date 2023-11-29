@@ -11,6 +11,7 @@ public interface ProductService {
     Product delProduct(Integer id);
     Product getProductById(Integer id);
     List<Product> getAllProducts();
+    List<Product> getAllEnabledProducts();
     List<Product> getProductsBySubCategoryId(Integer id);
     List<Product> getProductsByProviderId(Integer id);
 }

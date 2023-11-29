@@ -17,7 +17,9 @@ public class Provider {
     private Integer id;
     @Column(nullable = false)
     private String name;
+    private String brand;
     private String phoneNo;
     private String address;
-    private boolean isEnabled;
+    private boolean isEnabled = true;
+
 }

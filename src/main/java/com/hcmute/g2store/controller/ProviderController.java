@@ -16,7 +16,10 @@ public class ProviderController {
     public ResponseEntity<List<Provider>> getAllProviders() {
         return ResponseEntity.ok(providerService.getAllProviders());
     }
-
+    @GetMapping("/api/v1/providers-enabled")
+    public ResponseEntity<List<Provider>> getAllEnabledProviders() {
+        return ResponseEntity.ok(providerService.getAllEnabledProviders());
+    }
     @PostMapping("/api/v1/add-provider")
     public ResponseEntity<Provider> addProvider(@RequestBody Provider provider) {
         return ResponseEntity.ok(providerService.addProvider(provider));

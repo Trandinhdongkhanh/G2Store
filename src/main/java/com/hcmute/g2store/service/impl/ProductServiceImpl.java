@@ -13,6 +13,7 @@ import com.hcmute.g2store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,10 +38,8 @@ public class ProductServiceImpl implements ProductService {
         if (provider.isEmpty()) {
             throw new ProviderException("Provider " + providerId + " not found");
         }
-
         product.setSubCategory(subCategory.get());
         product.setProvider(provider.get());
-
         return productRepo.save(product);
     }
 
@@ -64,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product delProduct(Integer id) {
         Optional<Product> product = productRepo.findById(id);
         if (product.isPresent()) {
@@ -86,7 +86,14 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
-
+    @Override
+    public List<Product> getAllEnabledProducts() {
+        List<Product> enabledProducts = productRepo.findByIsEnabled(true);
+        if (enabledProducts.isEmpty()) {
+            throw new ProductException("No enabled Products found");
+        }
+        return enabledProducts;
+    }
     @Override
     public List<Product> getProductsBySubCategoryId(Integer id) {
         return productRepo.findAllBySubCategory(id);

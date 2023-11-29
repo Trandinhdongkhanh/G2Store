@@ -1,5 +1,6 @@
 package com.hcmute.g2store.controller;
 
+import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class SubCategoryController {
     @GetMapping("/api/v1/sub-categories")
     public ResponseEntity<List<SubCategory>> getAllSubCategories() {
         return ResponseEntity.ok(subCategoryService.getAllSubCategories());
+    }
+    @GetMapping("/api/v1/sub-categories-enabled")
+    public ResponseEntity<List<SubCategory>> getAllEnabledSubCategories() {
+        return ResponseEntity.ok(subCategoryService.getAllEnabledSubCategories());
     }
     @GetMapping("/api/v1/sub-category/{id}")
     public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {

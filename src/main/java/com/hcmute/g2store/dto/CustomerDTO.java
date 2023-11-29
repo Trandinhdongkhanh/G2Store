@@ -17,4 +17,5 @@ public class CustomerDTO {
     private Integer point;
     private String address;
     private String avatar;
+    private boolean enabled;
 }

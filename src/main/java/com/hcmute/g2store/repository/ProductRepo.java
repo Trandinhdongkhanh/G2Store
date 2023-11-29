@@ -1,6 +1,7 @@
 package com.hcmute.g2store.repository;
 
 import com.hcmute.g2store.entity.Product;
+import com.hcmute.g2store.entity.SubCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findAllBySubCategory(Integer id);
     @Query("select s from Product s where s.provider.id = ?1")
     List<Product> findAllByProvider(Integer id);
+    List<Product> findByIsEnabled(boolean isEnabled);
 }

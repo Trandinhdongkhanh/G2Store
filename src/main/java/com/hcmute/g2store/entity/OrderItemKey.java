@@ -1,19 +1,20 @@
 package com.hcmute.g2store.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderItemKey implements Serializable {
     @Column(name = "order_id")
     private Integer orderId;
     @Column(name = "product_id")
     private Integer productId;
-
-    public OrderItemKey() {
-
-    }
 
     @Override
     public int hashCode() {
@@ -25,8 +26,4 @@ public class OrderItemKey implements Serializable {
         return super.equals(obj);
     }
 
-    public OrderItemKey(Integer orderId, Integer productId) {
-        this.orderId = orderId;
-        this.productId = productId;
-    }
 }

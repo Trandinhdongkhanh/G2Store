@@ -1,6 +1,7 @@
 package com.hcmute.g2store.controller;
 
 import com.hcmute.g2store.entity.Category;
+import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,10 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
-
+    @GetMapping("/api/v1/categories-enabled")
+    public ResponseEntity<List<Category>> getAllEnabledCategories() {
+        return ResponseEntity.ok(categoryService.getAllEnabledCategories());
+    }
     @PostMapping("/api/v1/add-category")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         return ResponseEntity.ok(categoryService.addCategory(category));

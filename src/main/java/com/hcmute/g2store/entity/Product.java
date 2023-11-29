@@ -40,5 +40,5 @@ public class Product {
     private Set<CartItem> cartItems;
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems;
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 }

@@ -33,6 +33,10 @@ public class CartItemController {
         cartItemService.deleteCartItem(cartItemKey);
         return ResponseEntity.ok(cartItemKey);
     }
+    @DeleteMapping("/api/v1/delete-cartitems-customer")
+    public void deleteCartItemByCustomerId(@RequestParam Integer customerId) {
+        cartItemService.deleteAllCartItemsByCustomerId(customerId);
+    }
 
     @GetMapping("/api/v1/cartitems")
     public ResponseEntity<List<CartItem>> getAllCartItems() {

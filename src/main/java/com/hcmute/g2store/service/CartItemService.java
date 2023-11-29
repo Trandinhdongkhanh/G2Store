@@ -10,6 +10,7 @@ public interface CartItemService {
     CartItem addCartItem(CartItem cartItem);
     CartItem updateQuantity(CartItem cartItem);
     CartItemKey deleteCartItem(CartItemKey cartItemKey);
+    void deleteAllCartItemsByCustomerId(Integer customerId);
     List<CartItem> getAllCartItems();
     CartItem getCartItemById(CartItemKey cartItemKey);
     List<CartItemDTO> getCartItemByCustomerId(Integer customerId);

@@ -26,10 +26,17 @@ public class Order {
     private Date createdDate;
     private OrderStatus orderStatus;
     private String note;
+    @Transient
+    private Integer total;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @OneToMany(mappedBy = "order")
     @JsonManagedReference
     private Set<OrderItem> orderItems;
+    public Integer getTotal() {
+        return this.orderItems.stream()
+                .map(OrderItem::getTotal)
+                .reduce(0, Integer::sum);
+    }
 }

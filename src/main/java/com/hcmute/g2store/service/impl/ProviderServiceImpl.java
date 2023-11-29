@@ -22,14 +22,17 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
+    @Transactional
     public Provider delProvider(Integer id) {
         Optional<Provider> provider = providerRepo.findById(id);
         if (provider.isPresent()) {
             provider.get().setEnabled(false);
             return provider.get();
+        } else {
+            throw new ProviderException("Provider with id " + id + " not found");
         }
-        throw new ProviderException("Provider with id" + id + " not found");
     }
+
 
     @Override
     @Transactional
@@ -37,8 +40,10 @@ public class ProviderServiceImpl implements ProviderService {
         Optional<Provider> provider = providerRepo.findById(updateProvider.getId());
         if (provider.isPresent()){
             provider.get().setName(updateProvider.getName());
+            provider.get().setBrand(updateProvider.getBrand());
             provider.get().setPhoneNo(updateProvider.getPhoneNo());
             provider.get().setAddress(updateProvider.getAddress());
+            provider.get().setEnabled(updateProvider.isEnabled());
             return provider.get();
         }
         throw new ProviderException("Provider: " + updateProvider.getName() + " not found");
@@ -47,9 +52,20 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public List<Provider> getAllProviders() {
         List<Provider> providers = providerRepo.findAll();
-        if (providers.isEmpty()) throw new ProviderException("No Provider found");
+        if (providers.isEmpty()) {
+            throw new ProviderException("No enabled Providers found");
+        }
         return providers;
     }
+    @Override
+    public List<Provider> getAllEnabledProviders() {
+        List<Provider> enabledProviders = providerRepo.findByIsEnabled(true);
+        if (enabledProviders.isEmpty()) {
+            throw new ProviderException("No enabled Providers found");
+        }
+        return enabledProviders;
+    }
+
 
 
     @Override

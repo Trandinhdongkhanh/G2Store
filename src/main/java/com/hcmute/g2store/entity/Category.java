@@ -19,7 +19,7 @@ public class Category {
     private Integer id;
     @Column(nullable = false)
     private String name;
-    private boolean isEnabled;
+    private boolean isEnabled = true;
     public Category(String name) {
         this.name = name;
     }

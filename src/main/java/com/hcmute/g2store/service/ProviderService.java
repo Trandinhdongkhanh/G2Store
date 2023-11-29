@@ -10,4 +10,5 @@ public interface ProviderService {
     Provider updateProvider(Provider provider);
     List<Provider> getAllProviders();
     Provider getProviderById(Integer id);
+    List<Provider> getAllEnabledProviders();
 }

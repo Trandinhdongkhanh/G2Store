@@ -1,9 +1,12 @@
 package com.hcmute.g2store.service.impl;
 
 import com.hcmute.g2store.entity.Category;
+import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.exception.CategoryException;
+import com.hcmute.g2store.exception.ProductException;
 import com.hcmute.g2store.repository.CategoryRepo;
+import com.hcmute.g2store.repository.ProductRepo;
 import com.hcmute.g2store.repository.SubCategoryRepo;
 import com.hcmute.g2store.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,7 @@ public class SubCategoryImpl implements SubCategoryService {
         if (category.isEmpty()) throw new CategoryException("Category " + updateSubCategory.getCategory().getId() + " not found");
         subCategory.get().setName(updateSubCategory.getName());
         subCategory.get().setCategory(category.get());
+        subCategory.get().setEnabled(updateSubCategory.isEnabled());
         return subCategory.get();
     }
 
@@ -64,6 +68,14 @@ public class SubCategoryImpl implements SubCategoryService {
     @Override
     public List<SubCategory> getAllSubCategories() {
         return subCategoryRepo.findAll();
+    }
+    @Override
+    public List<SubCategory> getAllEnabledSubCategories() {
+        List<SubCategory> enabledSubCategories = subCategoryRepo.findByIsEnabled(true);
+        if (enabledSubCategories.isEmpty()) {
+            throw new CategoryException("No enabled SubCategories found");
+        }
+        return enabledSubCategories;
     }
 
     @Override

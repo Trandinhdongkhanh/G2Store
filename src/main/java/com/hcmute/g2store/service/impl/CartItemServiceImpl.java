@@ -56,7 +56,15 @@ public class CartItemServiceImpl implements CartItemService {
             throw new CartItemException("CartItem with id " + cartItemKey + " not found");
         }
     }
-
+    @Override
+    @Transactional
+    public void deleteAllCartItemsByCustomerId(Integer customerId) {
+        try {
+            cartItemRepository.deleteAllByCustomer(customerId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new CartItemException("No cart items found for customerId " + customerId);
+        }
+    }
     @Override
     public List<CartItem> getAllCartItems() {
         return cartItemRepository.findAll();

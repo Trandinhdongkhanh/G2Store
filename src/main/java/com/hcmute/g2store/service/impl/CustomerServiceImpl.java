@@ -2,8 +2,10 @@ package com.hcmute.g2store.service.impl;
 
 import com.hcmute.g2store.dto.CustomerDTO;
 import com.hcmute.g2store.entity.Customer;
+import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.entity.Role;
 import com.hcmute.g2store.exception.LoginException;
+import com.hcmute.g2store.exception.ProviderException;
 import com.hcmute.g2store.repository.CustomerRepo;
 import com.hcmute.g2store.repository.RoleRepo;
 import com.hcmute.g2store.security.CustomerDetail;
@@ -63,5 +65,40 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return customerRepo.findAll().stream().map(Mapper::toCustomerDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<Customer> getAllStatusCustomers() {
+        return customerRepo.findAll();
+    }
+    @Override
+    public CustomerDTO getCustomerById(Integer id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()){
+            return  Mapper.toCustomerDto(customer.get());
+        }
+        throw new LoginException("Customer " + id + " not found");
+    }
+    @Override
+    public CustomerDTO updateProfile(Customer updateCustomer) {
+        Optional<Customer> customer = customerRepo.findById(updateCustomer.getId());
+        if (customer.isPresent()){
+            customer.get().setFullName(updateCustomer.getFullName());
+            customer.get().setPhoneNo(updateCustomer.getPhoneNo());
+            customer.get().setAddress(updateCustomer.getAddress());
+            customer.get().setAvatar(updateCustomer.getAvatar());
+            customerRepo.save(customer.get());
+            return Mapper.toCustomerDto(customer.get());
+        }
+        throw new LoginException("Wrong credentials");
+    }
+    @Override
+    public CustomerDTO updateStatus(Customer updateCustomer) {
+        Optional<Customer> customer = customerRepo.findById(updateCustomer.getId());
+        if (customer.isPresent()){
+            customer.get().setEnabled(updateCustomer.isEnabled());
+            customerRepo.save(customer.get());
+            return Mapper.toCustomerDto(customer.get());
+        }
+        throw new LoginException("Wrong credentials");
     }
 }

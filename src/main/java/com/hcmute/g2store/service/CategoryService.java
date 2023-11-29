@@ -9,5 +9,6 @@ public interface CategoryService {
     Category updateCategory(Category category);
     Category deleteCategory(Integer id);
     List<Category> getAllCategories();
+    List<Category> getAllEnabledCategories();
     Category getCategoryById(Integer id);
 }
