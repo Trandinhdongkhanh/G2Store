@@ -3,6 +3,7 @@ package com.hcmute.g2store.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hcmute.g2store.enums.OrderStatus;
+import com.hcmute.g2store.enums.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,8 @@ public class Order {
     private Date createdDate;
     private OrderStatus orderStatus;
     private String note;
+    private PaymentMethod paymentMethod;
+    private Integer shippingFee;
     @Transient
     private Integer total;
     @ManyToOne

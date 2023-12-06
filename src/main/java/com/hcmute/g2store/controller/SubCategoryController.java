@@ -14,10 +14,6 @@ public class SubCategoryController {
     @Autowired
     private SubCategoryService subCategoryService;
 
-    @GetMapping("/api/v1/sub-categories")
-    public ResponseEntity<List<SubCategory>> getAllSubCategories() {
-        return ResponseEntity.ok(subCategoryService.getAllSubCategories());
-    }
     @GetMapping("/api/v1/sub-categories-enabled")
     public ResponseEntity<List<SubCategory>> getAllEnabledSubCategories() {
         return ResponseEntity.ok(subCategoryService.getAllEnabledSubCategories());
@@ -30,17 +26,20 @@ public class SubCategoryController {
     public ResponseEntity<List<SubCategory>> getSubCategoriesByCateId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(subCategoryService.getSubCategoriesByCategoryId(id));
     }
-
-    @PostMapping("/api/v1/add-sub-category")
+    @GetMapping("/api/v1/admin/sub-categories")
+    public ResponseEntity<List<SubCategory>> getAllSubCategories() {
+        return ResponseEntity.ok(subCategoryService.getAllSubCategories());
+    }
+    @PostMapping("/api/v1/admin/add-sub-category")
     public ResponseEntity<SubCategory> addSubCategory(@RequestBody SubCategory subCategory) {
         return ResponseEntity.ok(subCategoryService.addSubCategory(subCategory));
     }
 
-    @PutMapping("/api/v1/update-sub-category")
+    @PutMapping("/api/v1/admin/update-sub-category")
     public ResponseEntity<SubCategory> updateSubCategory(@RequestBody SubCategory subCategory) {
         return ResponseEntity.ok(subCategoryService.updateSubCategory(subCategory));
     }
-    @PutMapping("/api/v1/del-sub-category/{id}")
+    @PutMapping("/api/v1/admin/del-sub-category/{id}")
     public ResponseEntity<SubCategory> delSubCategory(@PathVariable("id") Integer id){
         return ResponseEntity.ok(subCategoryService.delSubCategory(id));
     }

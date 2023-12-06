@@ -18,6 +18,7 @@ public class Mapper {
                 .point(customer.getPoint())
                 .address(customer.getAddress())
                 .avatar(customer.getAvatar())
+                .role(customer.getRoles())
                 .enabled(customer.isEnabled())
                 .build();
     }

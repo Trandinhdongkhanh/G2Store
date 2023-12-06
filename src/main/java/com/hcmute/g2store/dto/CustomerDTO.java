@@ -1,7 +1,10 @@
 package com.hcmute.g2store.dto;
 
 
+import com.hcmute.g2store.entity.Role;
 import lombok.*;
+
+import java.util.Set;
 
 @Builder
 @Getter
@@ -17,5 +20,6 @@ public class CustomerDTO {
     private Integer point;
     private String address;
     private String avatar;
+    private Set<Role> role;
     private boolean enabled;
 }

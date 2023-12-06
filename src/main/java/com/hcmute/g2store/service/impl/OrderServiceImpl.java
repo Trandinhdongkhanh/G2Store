@@ -72,7 +72,6 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> optionalOrder = orderRepo.findById(id);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            // Perform any necessary business logic before deleting the order
             orderRepo.delete(order);
             return order;
         }

@@ -1,4 +1,5 @@
 package com.hcmute.g2store.security;
+import com.hcmute.g2store.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomerDetailService customerDetailService;
     @Autowired
+    private AdminDetailService adminDetailService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Bean
@@ -46,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration); // Adjust the path pattern as needed
+        source.registerCorsConfiguration("/api/**", configuration);
 
         return source;
     }
@@ -59,13 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/customers").permitAll()
-                .antMatchers("/api/v1/signup").permitAll()
-                .antMatchers("/api/v1/signin").permitAll()
-                .antMatchers("/api/v1/add-category").permitAll()
-                .antMatchers("/api/v1/update-category/*").permitAll()
-                .antMatchers("/api/v1/delete-category/*").permitAll()
-                .antMatchers("/api/v1/add-sub-category").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .cors().disable()

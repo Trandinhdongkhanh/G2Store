@@ -29,6 +29,8 @@ public class Product {
     @Lob
     private String image;
     private Integer discount;
+    private String size;
+    private Float weight;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "sub_cate_id")
     private SubCategory subCategory;

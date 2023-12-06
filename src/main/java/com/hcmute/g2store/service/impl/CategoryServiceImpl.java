@@ -1,6 +1,7 @@
 package com.hcmute.g2store.service.impl;
 
 import com.hcmute.g2store.entity.Category;
+import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.exception.CategoryException;
 import com.hcmute.g2store.exception.ProviderException;

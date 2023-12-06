@@ -12,6 +12,7 @@ public interface ProductService {
     Product getProductById(Integer id);
     List<Product> getAllProducts();
     List<Product> getAllEnabledProducts();
+    List<Product> getProductsByCategory(Integer id);
     List<Product> getProductsBySubCategoryId(Integer id);
     List<Product> getProductsByProviderId(Integer id);
 }

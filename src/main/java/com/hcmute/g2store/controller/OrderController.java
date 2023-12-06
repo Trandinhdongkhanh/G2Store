@@ -15,19 +15,17 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/api/v1/orders")
+    @GetMapping("/api/v1/admin/orders")
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
-
+    @PutMapping("/api/v1/admin/update-order-status")
+    public ResponseEntity<?> updateOrderStatus(@RequestBody Order order) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(order));
+    }
     @PostMapping("/api/v1/add-order")
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         return ResponseEntity.ok(orderService.addOrder(order));
-    }
-
-    @PutMapping("/api/v1/update-order-status")
-    public ResponseEntity<?> updateOrderStatus(@RequestBody Order order) {
-        return ResponseEntity.ok(orderService.updateOrderStatus(order));
     }
 
     @PutMapping("/api/v1/delete-order/{id}")

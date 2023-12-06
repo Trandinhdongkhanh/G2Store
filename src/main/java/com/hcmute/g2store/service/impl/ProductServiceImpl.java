@@ -1,11 +1,13 @@
 package com.hcmute.g2store.service.impl;
 
+import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.exception.CategoryException;
 import com.hcmute.g2store.exception.ProductException;
 import com.hcmute.g2store.exception.ProviderException;
+import com.hcmute.g2store.repository.CategoryRepo;
 import com.hcmute.g2store.repository.ProductRepo;
 import com.hcmute.g2store.repository.ProviderRepo;
 import com.hcmute.g2store.repository.SubCategoryRepo;
@@ -93,6 +95,10 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductException("No enabled Products found");
         }
         return enabledProducts;
+    }
+    @Override
+    public List<Product> getProductsByCategory(Integer id) {
+        return productRepo.findProductsByCategory(id);
     }
     @Override
     public List<Product> getProductsBySubCategoryId(Integer id) {
