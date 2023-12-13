@@ -71,9 +71,16 @@ public class OrderServiceImpl implements OrderService {
     public Order deleteOrder(Integer id) {
         Optional<Order> optionalOrder = orderRepo.findById(id);
         if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            orderRepo.delete(order);
-            return order;
+            OrderStatus status = optionalOrder.get().getOrderStatus();
+            if(status.equals(OrderStatus.ON_DELIVERY) ||
+                    status.equals(OrderStatus.SUCCESS) ||
+                    status.equals(OrderStatus.CANCEL)) {
+                throw new OrderException("Order with id " + id + " can not Cancel");
+            }
+            else {
+                optionalOrder.get().setOrderStatus(OrderStatus.CANCEL);
+                return optionalOrder.get();
+            }
         }
         throw new OrderException("Order with id " + id + " not found");
     }

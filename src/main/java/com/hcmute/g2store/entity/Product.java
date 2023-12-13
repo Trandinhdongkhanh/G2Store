@@ -31,6 +31,7 @@ public class Product {
     private Integer discount;
     private String size;
     private Float weight;
+    private Integer quantity;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "sub_cate_id")
     private SubCategory subCategory;

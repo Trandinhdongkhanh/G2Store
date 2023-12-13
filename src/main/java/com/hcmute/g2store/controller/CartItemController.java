@@ -20,13 +20,11 @@ public class CartItemController {
         CartItem addedCartItem = cartItemService.addCartItem(cartItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedCartItem);
     }
-
     @PutMapping("/api/v1/update-cartitems")
     public ResponseEntity<CartItem> updateQuantity(@RequestBody CartItem cartItem) {
         CartItem updatedCartItem = cartItemService.updateQuantity(cartItem);
         return ResponseEntity.ok(updatedCartItem);
     }
-
     @DeleteMapping("/api/v1/delete-cartitem")
     public ResponseEntity<CartItemKey> deleteCartItem(@RequestParam Integer customerId, @RequestParam Integer productId) {
         CartItemKey cartItemKey = new CartItemKey(customerId, productId);
@@ -37,7 +35,6 @@ public class CartItemController {
     public void deleteCartItemByCustomerId(@RequestParam Integer customerId) {
         cartItemService.deleteAllCartItemsByCustomerId(customerId);
     }
-
     @GetMapping("/api/v1/cartitems")
     public ResponseEntity<List<CartItem>> getAllCartItems() {
         List<CartItem> cartItems = cartItemService.getAllCartItems();

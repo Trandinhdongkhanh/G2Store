@@ -34,6 +34,10 @@ public class Customer {
     @Column(nullable = false)
     private String phoneNo;
     private Integer point;
+    private String province;
+    private String district;
+    private Integer districtId;
+    private String ward;
     private String address;
     @Lob //Dung de tao cac chuoi van ban dai
     @Column(columnDefinition = "MEDIUMBLOB")
@@ -52,7 +56,7 @@ public class Customer {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<CartItem> items;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Set<OrderItem> orderItems;
 
 

@@ -27,7 +27,6 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         return ResponseEntity.ok(orderService.addOrder(order));
     }
-
     @PutMapping("/api/v1/delete-order/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(orderService.deleteOrder(id));

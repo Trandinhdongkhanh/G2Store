@@ -43,6 +43,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPoint(0);
         customer.setAvatar(null);
         customer.setAddress(null);
+        customer.setProvince(null);
+        customer.setDistrict(null);
+        customer.setWard(null);
         customer.setAccountNonExpired(true);
         customer.setAccountNonLocked(true);
         customer.setCredentialsNonExpired(true);
@@ -82,10 +85,30 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO updateProfile(Customer updateCustomer) {
         Optional<Customer> customer = customerRepo.findById(updateCustomer.getId());
         if (customer.isPresent()){
-            customer.get().setFullName(updateCustomer.getFullName());
-            customer.get().setPhoneNo(updateCustomer.getPhoneNo());
-            customer.get().setAddress(updateCustomer.getAddress());
-            customer.get().setAvatar(updateCustomer.getAvatar());
+            if (updateCustomer.getFullName() != null) {
+                customer.get().setFullName(updateCustomer.getFullName());
+            }
+            if (updateCustomer.getPhoneNo() != null) {
+                customer.get().setPhoneNo(updateCustomer.getPhoneNo());
+            }
+            if (updateCustomer.getProvince() != null) {
+                customer.get().setProvince(updateCustomer.getProvince());
+            }
+            if (updateCustomer.getDistrict() != null) {
+                customer.get().setDistrict(updateCustomer.getDistrict());
+            }
+            if (updateCustomer.getDistrictId() != null) {
+                customer.get().setDistrictId(updateCustomer.getDistrictId());
+            }
+            if (updateCustomer.getWard() != null) {
+                customer.get().setWard(updateCustomer.getWard());
+            }
+            if (updateCustomer.getAddress() != null) {
+                customer.get().setAddress(updateCustomer.getAddress());
+            }
+            if (updateCustomer.getAvatar() != null) {
+                customer.get().setAvatar(updateCustomer.getAvatar());
+            }
             customerRepo.save(customer.get());
             return Mapper.toCustomerDto(customer.get());
         }

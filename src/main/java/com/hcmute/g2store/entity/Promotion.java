@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -21,7 +22,5 @@ public class Promotion {
     private Date endDate;
     private String code;
     private Integer value;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Integer quantity;
 }
