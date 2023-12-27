@@ -19,7 +19,7 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
-    @PutMapping("/api/v1/admin/update-order-status")
+    @PutMapping("/api/v1/update-order-status")
     public ResponseEntity<?> updateOrderStatus(@RequestBody Order order) {
         return ResponseEntity.ok(orderService.updateOrderStatus(order));
     }
@@ -32,7 +32,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.deleteOrder(id));
     }
     @GetMapping("/api/v1/order/{id}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable("id") Integer id){
+    public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id){
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
     @GetMapping("/api/v1/orders-customer")

@@ -10,11 +10,13 @@ import com.hcmute.g2store.repository.OrderItemRepo;
 import com.hcmute.g2store.repository.OrderRepo;
 import com.hcmute.g2store.repository.ProductRepo;
 import com.hcmute.g2store.service.CustomerService;
+import com.hcmute.g2store.service.EmailService;
 import com.hcmute.g2store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,9 +29,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CustomerRepo customerRepo;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private OrderItemRepo orderItemRepo;
     @Override
-    @Transactional
     public Order addOrder(Order addOrder) {
         Optional<Customer> customer = customerRepo.findById(addOrder.getCustomer().getId());
         if (customer.isEmpty()) {
@@ -49,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
             orderItemRepo.save(orderItem);
         }
         orderRepo.save(addOrder);
+        emailService.sendEmail(addOrder);
         return addOrder;
     }
 
@@ -95,10 +99,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO getOrderById(Integer id) {
+    public Order getOrderById(Integer id) {
         Optional<Order> optionalOrder = orderRepo.findById(id);
         if (optionalOrder.isPresent()) {
-            return Mapper.toOrderDto(optionalOrder.get());
+            return optionalOrder.get();
         }
         throw new OrderException("Order with id " + id + " not found");
     }

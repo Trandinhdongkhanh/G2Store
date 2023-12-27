@@ -19,7 +19,8 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     @Query("select o from Order o where o.customer.id = ?1 and o.orderStatus = 2")
     List<Order> findAllOrdersByCustomerOnDelivery(Integer id);
     @Query("select o from Order o where o.customer.id = ?1 and o.orderStatus = 3")
-    List<Order> findAllOrdersByCustomerCancel(Integer id);
-    @Query("select o from Order o where o.customer.id = ?1 and o.orderStatus = 4")
     List<Order> findAllOrdersByCustomerSuccess(Integer id);
+    @Query("select o from Order o where o.customer.id = ?1 and o.orderStatus = 4")
+    List<Order> findAllOrdersByCustomerCancel(Integer id);
+
 }

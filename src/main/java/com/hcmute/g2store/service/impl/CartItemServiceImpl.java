@@ -38,9 +38,8 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItem updateQuantity(CartItem updateCartItem) {
         Optional<CartItem> cartItem = cartItemRepository.findById(updateCartItem.getId());
         if (cartItem.isPresent()) {
-            updateCartItem.setCustomer(cartItem.get().getCustomer());
-            updateCartItem.setProduct(cartItem.get().getProduct());
-            return updateCartItem;
+            cartItem.get().setQuantity(updateCartItem.getQuantity());
+            return cartItem.get();
         }
         throw new CartItemException("CartItem with id " + updateCartItem.getId() + " not found");
     }

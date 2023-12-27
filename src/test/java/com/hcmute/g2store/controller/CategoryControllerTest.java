@@ -53,16 +53,13 @@ class CategoryControllerTest {
     void updateCategory() {
         Category categoryToUpdate = new Category("Updated Category");
         when(categoryService.updateCategory(categoryToUpdate)).thenReturn(categoryToUpdate);
-
         ResponseEntity<?> responseEntity = categoryController.updateCategory(categoryToUpdate);
-
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(categoryService, times(1)).updateCategory(categoryToUpdate);
     }
 
     @Test
     void deleteCategory() {
-        // Arrange
         int categoryId = 1;
         Category mockCategory = Category.builder()
                 .id(categoryId)

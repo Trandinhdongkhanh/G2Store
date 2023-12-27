@@ -11,6 +11,7 @@ import com.hcmute.g2store.repository.RoleRepo;
 import com.hcmute.g2store.security.CustomerDetail;
 import com.hcmute.g2store.security.CustomerDetailService;
 import com.hcmute.g2store.service.CustomerService;
+import com.hcmute.g2store.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CustomerDetailService customerDetailService;
+    @Autowired
+    private EmailService emailService;
     @Autowired
     public CustomerServiceImpl(CustomerRepo customerRepo){
         this.customerRepo = customerRepo;
@@ -66,6 +69,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void forgotPassword(String email) {
+        Optional<Customer> customer = customerRepo.findByEmail(email);
+        if (customer.isPresent()){
+            CustomerDTO customerDTO = Mapper.toCustomerDto(customer.get());
+            customer.get().setPassword(passwordEncoder.encode("12345678"));
+            customerRepo.save(customer.get());
+            emailService.sendOTPEmail(customerDTO);
+        }
+        throw new LoginException("Email " + email + " not found");
+    }
+
+    @Override
     public List<CustomerDTO> getAllCustomers() {
         return customerRepo.findAll().stream().map(Mapper::toCustomerDto).collect(Collectors.toList());
     }
@@ -81,6 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         throw new LoginException("Customer " + id + " not found");
     }
+
     @Override
     public CustomerDTO updateProfile(Customer updateCustomer) {
         Optional<Customer> customer = customerRepo.findById(updateCustomer.getId());
@@ -111,6 +127,19 @@ public class CustomerServiceImpl implements CustomerService {
             }
             customerRepo.save(customer.get());
             return Mapper.toCustomerDto(customer.get());
+        }
+        throw new LoginException("Wrong credentials");
+    }
+    @Override
+    public CustomerDTO updatePassword(Customer customer,  String newPassword) {
+        Optional<Customer> customerOptional = customerRepo.findById(customer.getId());
+        if (customerOptional.isPresent()){
+            if (passwordEncoder.matches(customer.getPassword(), customerOptional.get().getPassword())){
+                customerOptional.get().setPassword(passwordEncoder.encode(newPassword));
+                customerRepo.save(customerOptional.get());
+                return Mapper.toCustomerDto(customerOptional.get());
+            }
+            throw new LoginException("Wrong credentials");
         }
         throw new LoginException("Wrong credentials");
     }

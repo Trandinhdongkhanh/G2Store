@@ -4,6 +4,7 @@ import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.exception.CategoryException;
+import com.hcmute.g2store.exception.LoginException;
 import com.hcmute.g2store.exception.ProviderException;
 import com.hcmute.g2store.repository.CategoryRepo;
 import com.hcmute.g2store.service.CategoryService;
@@ -21,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(Category category) {
+        if (categoryRepo.existsByName(category.getName())) throw new CategoryException("Category existed");
         return categoryRepo.save(category);
     }
 
@@ -28,7 +30,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public Category updateCategory(Category updateCategory) {
         Optional<Category> category = categoryRepo.findById(updateCategory.getId());
+
         if (category.isPresent()){
+            if (!category.get().getName().equals(updateCategory.getName()) && categoryRepo.existsByName(updateCategory.getName())) throw new CategoryException("Category existed");
             category.get().setName(updateCategory.getName());
             category.get().setEnabled(updateCategory.isEnabled());
             return category.get();

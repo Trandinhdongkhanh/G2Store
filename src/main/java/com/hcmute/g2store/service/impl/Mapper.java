@@ -3,9 +3,11 @@ package com.hcmute.g2store.service.impl;
 import com.hcmute.g2store.dto.CartItemDTO;
 import com.hcmute.g2store.dto.CustomerDTO;
 import com.hcmute.g2store.dto.OrderDTO;
+import com.hcmute.g2store.dto.ReviewDTO;
 import com.hcmute.g2store.entity.CartItem;
 import com.hcmute.g2store.entity.Customer;
 import com.hcmute.g2store.entity.Order;
+import com.hcmute.g2store.entity.Review;
 
 public class Mapper {
     public static CustomerDTO toCustomerDto(Customer customer){
@@ -45,6 +47,15 @@ public class Mapper {
                 .address(order.getCustomer().getAddress())
                 .orderItems(order.getOrderItems())
                 .total(order.getTotal())
+                .build();
+    }
+    public static ReviewDTO toReviewDto(Review review){
+        return ReviewDTO.builder()
+                .id(review.getId())
+                .comment(review.getComment())
+                .rating(review.getRating())
+                .productId(review.getProduct().getId())
+                .customerId(review.getCustomer().getId())
                 .build();
     }
     public static Customer toCustomer(CustomerDTO customerDTO){

@@ -9,7 +9,7 @@ public interface OrderService {
     Order updateOrderStatus(Order order);
     Order deleteOrder(Integer id);
     List<Order> getAllOrders();
-    OrderDTO getOrderById(Integer id);
+    Order getOrderById(Integer id);
     List<OrderDTO> getOrdersByCustomerId(Integer customerId);
     List<OrderDTO> getOrdersByCustomerIdPending(Integer customerId);
     List<OrderDTO> getOrdersByCustomerIdConfirmed(Integer customerId);

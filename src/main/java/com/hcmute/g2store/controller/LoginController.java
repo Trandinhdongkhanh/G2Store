@@ -27,6 +27,14 @@ public class LoginController {
             @RequestParam("password") String password) {
         return ResponseEntity.ok(customerService.signin(username, password));
     }
+    @GetMapping("/api/v1/customer/forgot-password")
+    public void forgotPassword(@RequestParam String email) {
+        customerService.forgotPassword(email);
+    }
+    @PostMapping("/api/v1/customer/update-password")
+    public ResponseEntity<CustomerDTO> updatePassword(@RequestBody Customer customer, @RequestParam String newPassword) {
+        return ResponseEntity.ok(customerService.updatePassword(customer, newPassword));
+    }
     @GetMapping("/api/v1/admin/signin")
     public ResponseEntity<Admin> signinAdmin(
             @RequestParam("username") String username,
