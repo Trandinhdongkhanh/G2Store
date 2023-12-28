@@ -41,7 +41,7 @@ public class LoginController {
             @RequestParam("password") String password) {
         return ResponseEntity.ok(adminService.signin(username, password));
     }
-    @GetMapping("/api/v1/admin/signup")
+    @PostMapping("/api/v1/admin/signup")
     public ResponseEntity<Admin> signupAdmin(@RequestBody Admin admin) {
         return ResponseEntity.ok(adminService.signup(admin));
     }
