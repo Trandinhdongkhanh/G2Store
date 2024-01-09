@@ -97,6 +97,14 @@ public class ProductServiceImpl implements ProductService {
         return enabledProducts;
     }
     @Override
+    public List<Product> getProductsByPrice(Integer min, Integer max) {
+        List<Product> products = productRepo.findByIsEnabled(true);
+        if (products.isEmpty()) {
+            throw new ProductException("No enabled Products found");
+        }
+        return products;
+    }
+    @Override
     public List<Product> getProductsByCategory(Integer id) {
         return productRepo.findProductsByCategory(id);
     }

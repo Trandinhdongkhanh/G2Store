@@ -26,7 +26,7 @@ public class OrderItem {
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
-
+    private Integer productPrice;
     private Integer quantity;
 
     @Transient

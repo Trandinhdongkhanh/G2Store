@@ -1,23 +1,37 @@
 package com.hcmute.g2store.service.impl;
 
+import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.Provider;
+import com.hcmute.g2store.entity.Role;
 import com.hcmute.g2store.exception.ProviderException;
+import com.hcmute.g2store.repository.CategoryRepo;
 import com.hcmute.g2store.repository.ProviderRepo;
 import com.hcmute.g2store.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
     private ProviderRepo providerRepo;
-
+    @Autowired
+    private CategoryRepo categoryRepo;
     @Override
     public Provider addProvider(Provider provider) {
+        Set<Category> categories = new HashSet<>();
+        for (Category updateCategory : provider.getCategory()) {
+            Category category = categoryRepo.findById(updateCategory.getId())
+                    .orElseThrow(() -> new RuntimeException("Category with id " + updateCategory.getId() + " not found"));
+            categories.add(category);
+        }
+        provider.setCategory(categories);
         return providerRepo.save(provider);
     }
 

@@ -29,7 +29,7 @@ public class Order {
     private String note;
     private PaymentMethod paymentMethod;
     private Integer shippingFee;
-    @Transient
+    private Integer voucherDiscount;
     private Integer total;
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -37,9 +37,4 @@ public class Order {
     @OneToMany(mappedBy = "order")
     @JsonManagedReference
     private Set<OrderItem> orderItems;
-    public Integer getTotal() {
-        return this.orderItems.stream()
-                .map(OrderItem::getTotal)
-                .reduce(0, Integer::sum);
-    }
 }
