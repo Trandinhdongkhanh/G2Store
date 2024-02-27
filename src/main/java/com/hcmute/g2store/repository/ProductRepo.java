@@ -2,6 +2,8 @@ package com.hcmute.g2store.repository;
 
 import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.SubCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findAllBySubCategory(Integer id);
     @Query("select s from Product s where s.provider.id = ?1")
     List<Product> findAllByProvider(Integer id);
-    List<Product> findByIsEnabled(boolean isEnabled);
+    Page<Product> findByIsEnabled(boolean isEnabled, Pageable pageable);
     @Query("SELECT p FROM Product p " +
             "INNER JOIN p.subCategory sc " +
             "INNER JOIN sc.category c " +

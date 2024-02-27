@@ -4,6 +4,7 @@ import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/api/v1/products-enabled")
-    public ResponseEntity<List<Product>> getAllEnabledProducts() {
-        return ResponseEntity.ok(productService.getAllEnabledProducts());
+    public ResponseEntity<Page<Product>> getAllEnabledProducts(@RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "8") int size) {
+        return ResponseEntity.ok(productService.getAllEnabledProducts(page, size));
     }
     @GetMapping("/api/v1/products-category/{id}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("id") Integer id) {
@@ -35,8 +37,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsBySubCategoryId(id));
     }
     @GetMapping("/api/v1/admin/products")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "8") int size) {
+        return ResponseEntity.ok(productService.getAllProducts(page, size));
     }
     @PostMapping("/api/v1/admin/add-product")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {

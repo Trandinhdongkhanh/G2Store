@@ -1,23 +1,25 @@
 package com.hcmute.g2store.service.impl;
 
-import com.hcmute.g2store.entity.Category;
 import com.hcmute.g2store.entity.Product;
 import com.hcmute.g2store.entity.Provider;
 import com.hcmute.g2store.entity.SubCategory;
 import com.hcmute.g2store.exception.CategoryException;
 import com.hcmute.g2store.exception.ProductException;
 import com.hcmute.g2store.exception.ProviderException;
-import com.hcmute.g2store.repository.CategoryRepo;
 import com.hcmute.g2store.repository.ProductRepo;
 import com.hcmute.g2store.repository.ProviderRepo;
 import com.hcmute.g2store.repository.SubCategoryRepo;
 import com.hcmute.g2store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -85,24 +87,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepo.findAll();
+    public Page<Product> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepo.findAll(pageable);
     }
     @Override
-    public List<Product> getAllEnabledProducts() {
-        List<Product> enabledProducts = productRepo.findByIsEnabled(true);
+    public Page<Product> getAllEnabledProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> enabledProducts = productRepo.findByIsEnabled(true, pageable);
         if (enabledProducts.isEmpty()) {
             throw new ProductException("No enabled Products found");
         }
         return enabledProducts;
-    }
-    @Override
-    public List<Product> getProductsByPrice(Integer min, Integer max) {
-        List<Product> products = productRepo.findByIsEnabled(true);
-        if (products.isEmpty()) {
-            throw new ProductException("No enabled Products found");
-        }
-        return products;
     }
     @Override
     public List<Product> getProductsByCategory(Integer id) {
