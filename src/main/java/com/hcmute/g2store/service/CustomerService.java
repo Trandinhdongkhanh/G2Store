@@ -6,7 +6,7 @@ import com.hcmute.g2store.entity.Customer;
 import java.util.List;
 
 public interface CustomerService {
-    Customer signup(Customer customer);
+    CustomerDTO signup(Customer customer);
     CustomerDTO signin(String username, String password);
     void forgotPassword(String email);
     List<CustomerDTO> getAllCustomers();

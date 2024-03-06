@@ -14,6 +14,7 @@ public interface ProductService {
     Page<Product> getAllProducts(int page, int size);
     Page<Product> getAllEnabledProducts(int page, int size);
     List<Product> getProductsByCategory(Integer id);
+    List<Product> searchProductsByName(String keyword);
     List<Product> getProductsBySubCategoryId(Integer id);
     List<Product> getProductsByProviderId(Integer id);
 }

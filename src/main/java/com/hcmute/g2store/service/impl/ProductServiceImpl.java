@@ -105,6 +105,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.findProductsByCategory(id);
     }
     @Override
+    public List<Product> searchProductsByName(String keyword) {
+        return productRepo.searchProductsByName(keyword);
+    }
+    @Override
     public List<Product> getProductsBySubCategoryId(Integer id) {
         return productRepo.findAllBySubCategory(id);
     }

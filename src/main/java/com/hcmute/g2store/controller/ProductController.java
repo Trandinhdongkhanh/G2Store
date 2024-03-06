@@ -15,9 +15,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/api/v1/products-search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam("keyword") String keyword) {
+        List<Product> products = productService.searchProductsByName(keyword);
+        if (products.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(products);
+    }
     @GetMapping("/api/v1/products-enabled")
-    public ResponseEntity<Page<Product>> getAllEnabledProducts(@RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "8") int size) {
+    public ResponseEntity<Page<Product>> getAllEnabledProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int size) {
         return ResponseEntity.ok(productService.getAllEnabledProducts(page, size));
     }
     @GetMapping("/api/v1/products-category/{id}")

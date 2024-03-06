@@ -22,4 +22,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
             "INNER JOIN sc.category c " +
             "WHERE c.id = :categoryId")
     List<Product> findProductsByCategory(Integer categoryId);
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
+    List<Product> searchProductsByName(String keyword);
 }

@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepo = customerRepo;
     }
     @Override
-    public Customer signup(Customer customer) {
+    public CustomerDTO signup(Customer customer) {
         if (customerRepo.existsByUsername(customer.getUsername())) throw new LoginException("Username existed");
         if (customerRepo.existsByEmail(customer.getEmail())) throw new LoginException("Email existed");
         if (customerRepo.existsByPhoneNo(customer.getPhoneNo())) throw new LoginException("PhoneNo existed");
@@ -55,7 +55,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEnabled(true);
         customer.setRoles(roles);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        return customerRepo.save(customer);
+        customerRepo.save(customer);
+        return Mapper.toCustomerDto(customer);
     }
 
     @Override

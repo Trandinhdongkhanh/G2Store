@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
     @PostMapping("/api/v1/signup")
-    public ResponseEntity<Customer> signup(@RequestBody Customer customer) {
+    public ResponseEntity<CustomerDTO> signup(@RequestBody Customer customer) {
         return ResponseEntity.ok(customerService.signup(customer));
     }
     @GetMapping("/api/v1/signin/customer")
